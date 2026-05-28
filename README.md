@@ -1,12 +1,16 @@
 # Ardumower
 
-## Download
-__WARNING__: Do not use the master version (via download button), that is 'code we work on' and it may be unstable - use one release version instead (click on 'releases' link below)!
+## Rationale
+This is my personal copy of Ardumower repository; I'm trying for fun to "brain transplant" an old Husqvarna Automower 230ACX that's still working except for mainboard. Currently (May 2026) it still isn't operational. I'm not interested in GPS/no guide wire feature, as I have already installed one and my garden is very, very complicated and covered by trees. Frankly, I thought the mayor challenge with Ardumower was to control brushess 2 poles mower motor (it seems no BLDC advertise this usecase). After trying to build the firmware, I discovered the true problem was with it. 
+Wheel motors not working regardless of settings, ADC values nonsense, communication hangs, PFOD menus breaking and dancing settings, and much more.
+After having a look at the code, I discovered it's a mess. One problem is due to an understandable reason: the code was modified by many people, each one with a specific hardware; to fix own issue, often one would break others. For instance, the option for choosing a motor controller didn't read power if another was selected. Another thing I realized is that someone took a current measurement for a parameter - so if you adjust it on remote control you see it going up and down with motor load.
+Apart from this, Azurit is a complex piece of software, embedding many customized library functions, hard to fully understand.
 
-https://github.com/Ardumower/ardumower/releases
+So I had to options: throw it away with the hardware, or try playning with it, leveraging Vibe Coding. I'm an old school C programmer, my notions of object oriented are spotty, so here I am. This repository is here for me; if someone is playing with it as well, use it as you like.
 
-## Reporting a bug / Fehler melden
-[Click here!](https://github.com/Ardumower/ardumower/issues/new?title=Error+XYZ+%2F+Fehler+XYZ&body=Please+always+fill-in+below%2FBitte+unbedingt+ausf%C3%BCllen%21%0D%0A%0D%0A--English--%0D%0AYour+battery+voltage+%2812v%2C+24v%29%3A+24v%0D%0AYour+gear+motor+%28Ardumower%2C+other%29%3A+Ardumower+motor%0D%0AYour+Ardumower+software+version+%28pfodApp-%3EInfo%29%3A+890%0D%0AYour+Arduino+%28Mega+or+Due%29%3A+Mega+2560%0D%0AYour+PCB+version+%28printed+on+PCB%29%3A+0.5%0D%0AYour+PCB+mounted+parts+configuration+%28default+or+custom+and+how%29%3A+default%0D%0AOdometry+sensor+%28yes%2Fno%29%3F+yes%0D%0AArdumower+chassis+%28yes%2Fno%29%3F+yes%0D%0AExact+error+description%3A+...+%0D%0A%0D%0A--Deutsch--%0D%0ADeine+Akku-Spannung+%2812v%2C+24v%29%3A+24v%0D%0ADein+Antriebsmotor+%28Ardumower%2C+anderer%29%3A+Ardumower+Motor%0D%0ADeine+Ardumower-Software+Version%3A+%28pfodApp-%3EInfo%29%3A+890%0D%0ADeine+PCB-Version+%28siehe+Aufdruck%29%3A+0.5%0D%0ADein+Arduino+%28Mega+oder+Due%29%3A+Mega+2560%0D%0ADeine+PCB+Bauteilbest%C3%BCckung+%28Standard+oder+abweichend+und+wie%29%3A+Standard%0D%0AOdometrie+sensor+%28ja%2Fnein%29%3F+ja%0D%0AArdumower+Chassis+%28ja%2Fnein%29%3F+ja%0D%0AGenaue+Fehlerbeschreibung%3A+...%0D%0A) 
+Warning: I can only test one specific hardware. However, I've not deleted code for other hardware; maybe I'll do it, maybe I'll simply mark it somehow as "untested". 
+
+## Documentation from original Ardumower/Azurit project.
 
 ## Description
 Develop an open source robotic lawn mower (HW+SW reference platform)
